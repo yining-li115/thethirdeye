@@ -1,0 +1,58 @@
+# 3D Detection Pipeline with YOLOE + Depth-Anything-3
+
+This project implements a lightweight 3D detection and reconstruction pipeline by combining **YOLOE** (real-time object detector) and **Depth-Anything-3** (state-of-the-art monocular depth estimation model).
+
+The system takes an RGB image as input, detects objects using YOLOE, predicts the depth map using Depth-Anything-3, and fuses them to produce 3D-aware visualizations and simple scene reconstructions. A **FastAPI** server is used to expose the pipeline as a web API.
+
+
+This combined model has been tested and **runs successfully on Python 3.10**.
+
+
+---
+
+## ✨ Features
+
+- **Object detection** powered by **YOLOE**
+  - Fast and accurate detection
+  - Supports common object categories
+  - Can be installed directly via:
+    ```bash
+    pip install ultralytics
+- **Depth estimation** using **Depth-Anything-3**
+  - High-quality monocular depth
+  - Supports any indoor/outdoor scenes
+  - Installation instructions should follow the official repository:
+    https://github.com/ByteDance-Seed/Depth-Anything-3
+- **3D Fusion**
+  - Combine YOLO bounding boxes with depth for pseudo-3D object localization
+  - Generate colored point clouds (RGB + depth)
+  - Export `.ply` and `.npy` scene data
+- **FastAPI backend**
+  - HTTP API endpoints for running detection + depth in one request
+  - Easy to integrate with other services or a frontend
+
+---
+
+## 📂 Project Structure
+
+```text
+3d_detection/
+│
+├── yolo.py                     # YOLOE inference wrapper
+├── da3.py                      # Depth-Anything-3 inference wrapper
+├── yolo_da3.py                 # YOLOE + Depth-Anything-3 integrated pipeline
+├── myapp.py                    # FastAPI application entry point
+│
+├── app_outputs/                # Inference results (RGB, depth, detection)
+│   ├── tmpt0ppp1o6/
+│   └── tmpwrw78qdq/
+│
+└── reconstruction/             # 3D scene outputs
+    ├── scene.npy
+    ├── scene.ply
+    ├── scene_rgb.npy
+    └── soh_scene/
+        ├── depth_vis/
+        ├── gs_ply/
+        ├── scene.glb
+        └── scene.jpg
